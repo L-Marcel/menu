@@ -4,11 +4,14 @@ import scala.tools.jline.console.ConsoleReader;
 import src.layout.Menu;
 
 public class Terminal {
-    ConsoleReader consoleReader;
+    private ConsoleReader consoleReader;
+    private Boolean isWindows = false;
 
     public Terminal() {
         try {
             consoleReader = new ConsoleReader();
+            String os = System.getProperty("os.name").toLowerCase();
+            if(os.startsWith("windows")) isWindows = true;
         } catch (Exception e) {
             consoleReader = null;
         }
@@ -34,7 +37,9 @@ public class Terminal {
 
     public int key() {
         try {
-            return consoleReader.readVirtualKey();
+            int key = consoleReader.readVirtualKey();
+            if(isWindows && key == 13) return 10;
+            else return key;
         } catch (Exception e) {
             return -1;
         }

@@ -83,7 +83,7 @@ public class Menu {
         rollback(temporary + rollbacks);
         temporary = 0;
         temporarilyPush("");
-        temporarilyPush(Text.warning("‣ " + message));
+        temporarilyPush(Text.warning("> " + message));
         temporarilyPush("");
     };
 
@@ -104,7 +104,7 @@ public class Menu {
     //#region Input
     public static int getInt(String prompt, Validator<Integer> validator) {
         try {
-            String line = terminal.nextLine("• " + prompt);
+            String line = terminal.nextLine("- " + prompt);
             if(line.isEmpty()) throw new Exception();
             int input = Integer.parseInt(line);
             if(validator != null) validator.validate(input);
@@ -125,7 +125,7 @@ public class Menu {
 
     public static double getDouble(String prompt, Validator<Double> validator) {
         try {
-            String line = terminal.nextLine("• " + prompt);
+            String line = terminal.nextLine("- " + prompt);
             if(line.isEmpty()) throw new Exception();
             double input = Double.parseDouble(line);
             if(validator != null) validator.validate(input);
@@ -146,7 +146,7 @@ public class Menu {
 
     public static float getFloat(String prompt, Validator<Float> validator) {
         try {
-            String line = terminal.nextLine("• " + prompt);
+            String line = terminal.nextLine("- " + prompt);
             if(line.isEmpty()) throw new Exception();
             float input = Float.parseFloat(line);
             if(validator != null) validator.validate(input);
@@ -167,7 +167,7 @@ public class Menu {
 
     public static char getChar(String prompt, Validator<Character> validator) {
         try {
-            char input = terminal.nextLine("• " + prompt).charAt(0);
+            char input = terminal.nextLine("- " + prompt).charAt(0);
             if(validator != null) validator.validate(input);
             rollback();
             push(Text.success("✓ ") + prompt + Text.highlight(input));
@@ -183,7 +183,7 @@ public class Menu {
 
     public static String getString(String prompt, Validator<String> validator) {
         try {
-            String input = terminal.nextLine("• " + prompt);
+            String input = terminal.nextLine("- " + prompt);
             if(validator != null) validator.validate(input);
             else if (input.isEmpty()) throw new Exception();
             rollback();
@@ -205,16 +205,16 @@ public class Menu {
     public static int getOption(String prompt, String[] options, int selected) {
         if(options.length == -1) throw new EmptyArray("Sem opções disponíveis.");
         try {
-            push("• " + prompt);
+            push("- " + prompt);
             for (int i = 0; i < options.length; i++) {
                 if(selected == i) {
-                    push(Text.highlight(" ‣ " + options[i]), i == options.length - 1);
+                    push(Text.highlight(" > " + options[i]), i == options.length - 1);
                 } else {
                     push("   " + options[i], i == options.length - 1);
                 }
             }
             divider();
-            push("[" + Text.highlight("↑") + "/" + Text.highlight("↓") + "] Escolher");
+            push("[" + Text.highlight("UP") + "/" + Text.highlight("DOWN") + "] Escolher");
             push("[" + Text.highlight("ENTER") + "] Confirmar");
 
             int key = terminal.key();
@@ -294,15 +294,15 @@ public class Menu {
         try {
             for (int i = 0; i < options.length; i++) {
                 if(Array.exists(lockeds, i)) {
-                    push(Text.locked("• " + options[i]), i == options.length - 1);
+                    push(Text.locked("- " + options[i]), i == options.length - 1);
                 } else if(selected == i) {
-                    push(Text.highlight("‣ " + options[i]), i == options.length - 1);
+                    push(Text.highlight("> " + options[i]), i == options.length - 1);
                 } else {
-                    push("• " + options[i], i == options.length - 1);
+                    push("- " + options[i], i == options.length - 1);
                 }
             }
             divider();
-            push("[" + Text.highlight("↑") + "/" + Text.highlight("↓") + "] Escolher");
+            push("[" + Text.highlight("UP") + "/" + Text.highlight("DOWN") + "] Escolher");
             push("[" + Text.highlight("ENTER") + "] Confirmar");
             if(exit) push("[" + Text.highlight("BACKSPACE") + "] Sair");
             else push("[" + Text.highlight("BACKSPACE") + "] Voltar");
