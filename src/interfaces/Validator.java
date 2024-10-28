@@ -1,4 +1,4 @@
-package src;
+package src.interfaces;
 
 import src.errors.InvalidInput;
 

@@ -1,0 +1,41 @@
+package src.router;
+
+import java.util.LinkedList;
+
+import src.interfaces.Page;
+import src.layout.Menu;
+
+public class Router {
+    private LinkedList<Page> history = new LinkedList<>();
+
+    public void start(Page page) {
+        if(history.isEmpty()) {
+            history.addLast(page);
+            update();
+        };
+    };
+
+    private void update() {
+        if(!history.isEmpty()) {
+            Page current = history.getLast();
+            Menu.cleanup();
+            current.render(this);
+        };
+    };
+
+    public void navigate(Page route) {
+        history.addLast(route);
+        update();
+    }
+
+    public void back() {
+        history.removeLast();
+        update();
+    }
+
+    public void replace(Page route) {
+        history.removeLast();
+        history.addLast(route);
+        update();
+    }
+}
