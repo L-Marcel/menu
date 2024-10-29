@@ -5,7 +5,9 @@ import src.utils.Terminal;
 public class Main {
     public static void main(String[] args) {
         Terminal terminal = new Terminal();
-        System.out.println(terminal.key());
+        while(true) {
+            System.out.println(terminal.key());
+        }
         // Router router = new Router();
         // router.start(new MainPage());
     }
