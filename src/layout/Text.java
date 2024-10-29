@@ -17,7 +17,7 @@ public class Text {
     };
 
     public static String locked(String message) {
-        return new AnsiFormat(DESATURATED()).format(message.toString());
+        return new AnsiFormat(DESATURATED(), BLACK_TEXT()).format(message.toString());
     };
 
     public static <T extends Number> String highlight(T message) {

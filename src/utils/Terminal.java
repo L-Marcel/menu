@@ -26,10 +26,14 @@ public class Terminal {
         }
     };
 
-    public String nextLine(String Terminal) {
+    public String nextLine(String terminal) {
         try {
-            Menu.phantomPush(Terminal);
-            return consoleReader.readLine(Terminal).trim();
+            Menu.phantomPush(terminal);
+            consoleReader.setPrompt(terminal);
+            String line = consoleReader.readLine().trim();
+            consoleReader.setPrompt("");
+   
+            return line;
         } catch (Exception e) {
             return "";
         }
@@ -37,9 +41,7 @@ public class Terminal {
 
     public int key() {
         try {
-            int key = consoleReader.readVirtualKey();
-            if(isWindows && key == 13) return 10;
-            else return key;
+            return consoleReader.readVirtualKey();
         } catch (Exception e) {
             return -1;
         }

@@ -1,6 +1,5 @@
 package src.router.pages;
 
-import src.errors.InvalidInput;
 import src.interfaces.Page;
 import src.layout.Text;
 import src.layout.Menu;

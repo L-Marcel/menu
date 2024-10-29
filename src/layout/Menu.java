@@ -83,7 +83,7 @@ public class Menu {
         rollback(temporary + rollbacks);
         temporary = 0;
         temporarilyPush("");
-        temporarilyPush(Text.warning("> " + message));
+        temporarilyPush(Text.warning(">> " + message));
         temporarilyPush("");
     };
 
@@ -109,7 +109,7 @@ public class Menu {
             int input = Integer.parseInt(line);
             if(validator != null) validator.validate(input);
             rollback();
-            push(Text.success("✓ ") + prompt + Text.highlight(input));
+            push(Text.success("+ ") + prompt + Text.highlight(input));
             return input;
         } catch (NumberFormatException e) {
             warning("Por favor, forneça um número inteiro.");
@@ -130,7 +130,7 @@ public class Menu {
             double input = Double.parseDouble(line);
             if(validator != null) validator.validate(input);
             rollback();
-            push(Text.success("✓ ") + prompt + Text.highlight(input));
+            push(Text.success("+ ") + prompt + Text.highlight(input));
             return input;
         } catch (NumberFormatException e) {
             warning("Por favor, forneça um número.");
@@ -151,7 +151,7 @@ public class Menu {
             float input = Float.parseFloat(line);
             if(validator != null) validator.validate(input);
             rollback();
-            push(Text.success("✓ ") + prompt + Text.highlight(input));
+            push(Text.success("+ ") + prompt + Text.highlight(input));
             return input;
         } catch (NumberFormatException e) {
             warning("Por favor, forneça um número.");
@@ -170,7 +170,7 @@ public class Menu {
             char input = terminal.nextLine("- " + prompt).charAt(0);
             if(validator != null) validator.validate(input);
             rollback();
-            push(Text.success("✓ ") + prompt + Text.highlight(input));
+            push(Text.success("+ ") + prompt + Text.highlight(input));
             return input;
         } catch (InvalidInput e) {
             warning(e.getMessage());
@@ -184,10 +184,11 @@ public class Menu {
     public static String getString(String prompt, Validator<String> validator) {
         try {
             String input = terminal.nextLine("- " + prompt);
-            if(validator != null) validator.validate(input);
-            else if (input.isEmpty()) throw new Exception();
+            if(input.isEmpty()) throw new Exception();
+            else if(validator != null) validator.validate(input);
+            
             rollback();
-            push(Text.success("✓ ") + prompt + Text.highlight(input));
+            push(Text.success("+ ") + prompt + Text.highlight(input));
             return input;
         } catch (InvalidInput e) {
             warning(e.getMessage());
@@ -220,8 +221,8 @@ public class Menu {
             int key = terminal.key();
             rollback(options.length + 4);
             switch (key) {
-                case 10:
-                    push(Text.success("✓ ") + prompt + Text.highlight(options[selected]));
+                case 13:
+                    push(Text.success("+ ") + prompt + Text.highlight(options[selected]));
                     return selected;
                 case 14:
                     if(selected == options.length - 1) return getOption(prompt, options, 0);
@@ -242,9 +243,7 @@ public class Menu {
     //#region Page
     public static void pushPageBack() {
         push("[" + Text.highlight("BACKSPACE") + "] Voltar");
-
-        int key = terminal.key();
-        if(key != 8 && key != 10) {
+        if(terminal.key() != 8) {
             rollback(1);
             pushPageBack();
         }
@@ -261,7 +260,7 @@ public class Menu {
 
         int key = terminal.key();
         switch (key) {
-            case 10:
+            case 13:
                 return 0;
             case 8:
                 return -1;
@@ -309,7 +308,7 @@ public class Menu {
 
             int key = terminal.key();
             switch (key) {
-                case 10:
+                case 13:
                     return selected;
                 case 8:
                     return -1;
