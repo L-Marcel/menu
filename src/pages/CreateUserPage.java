@@ -1,29 +1,29 @@
 package src.pages;
 
-import src.core.Router;
-import src.core.interfaces.Page;
-import src.core.layout.Menu;
-import src.errors.InvalidInput;
+import console.Router;
+import console.errors.InvalidInput;
+import console.interfaces.Page;
+import console.layout.Menu;
 
 public class CreateUserPage implements Page {
     @Override
-    public void render(Router router) {
+    public void render(Menu menu, Router router) {
         String[] access = {"Usuário", "Administrador"};
         String[] genrers = {"Masculino", "Feminino", "Outro"};
 
-        Menu.header("Cadastrar usuário");
-        Menu.getOption("Acesso: ", access);
-        Menu.getOption("Gênero: ", genrers);
-        Menu.getString("Nome: ", null);
-        Menu.getString("E-mail: ", (t) -> {
+        menu.header("Cadastrar usuário");
+        menu.getOption("Acesso: ", access);
+        menu.getOption("Gênero: ", genrers);
+        menu.getString("Nome: ", null);
+        menu.getString("E-mail: ", (t) -> {
             if (!t.contains("@")) throw new InvalidInput("Forneça um e-mail válido.");
         });
-        Menu.getInt("Idade: ", (i) ->  {
+        menu.getInt("Idade: ", (i) ->  {
             if (i < 18) throw new InvalidInput("O usuário deve ter pelo menos 18 anos.");
         });
-        Menu.getFloat("Peso: ", null);
-        Menu.divider();
-        Menu.getPageConfirmation();
+        menu.getFloat("Peso: ", null);
+        menu.divider();
+        menu.getPageConfirmation();
         router.back();
     }
 }
