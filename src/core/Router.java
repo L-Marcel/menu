@@ -10,6 +10,7 @@ public class Router {
 
     public void start(Page page) {
         if(history.isEmpty()) {
+            Menu.start();
             history.addLast(page);
             update();
         };
@@ -20,6 +21,8 @@ public class Router {
             Page current = history.getLast();
             Menu.cleanup();
             current.render(this);
+        } else {
+            Menu.end();
         };
     };
 

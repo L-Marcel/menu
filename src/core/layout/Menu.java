@@ -15,6 +15,14 @@ public class Menu {
     private static LinkedList<String> lines = new LinkedList<String>();
     private static int temporary = 0;
 
+    public static void start() {
+        terminal.start();
+    };
+
+    public static void end() {
+        terminal.end();
+    };
+
     //#region Control
     public static void push(String line) {
         lines.addLast(line);
@@ -222,13 +230,13 @@ public class Menu {
             Key key = terminal.key();
             rollback(options.length + 4);
             switch (key) {
-                case Key.ENTER:
+                case ENTER:
                     push(Text.success("+ ") + prompt + Text.highlight(options[selected]));
                     return selected;
-                case Key.DOWN:
+                case DOWN:
                     if(selected == options.length - 1) return getOption(prompt, options, 0);
                     return getOption(prompt, options, selected + 1);
-                case Key.UP:
+                case UP:
                     if(selected == 0) return getOption(prompt, options, options.length - 1);
                     return getOption(prompt, options, selected - 1);
                 default:
@@ -261,9 +269,9 @@ public class Menu {
 
         Key key = terminal.key();
         switch (key) {
-            case Key.ENTER:
+            case ENTER:
                 return true;
-            case Key.BACKSPACE:
+            case BACKSPACE:
                 return false;
             default:
                 rollback(2);
@@ -313,11 +321,11 @@ public class Menu {
 
             Key key = terminal.key();
             switch (key) {
-                case Key.ENTER:
+                case ENTER:
                     return selected;
-                case Key.BACKSPACE:
+                case BACKSPACE:
                     return -1;
-                case Key.DOWN:
+                case DOWN:
                     rollback(options.length + 4);
                     if(selected >= 0) {
                         int next = (selected + 1) % options.length;
@@ -326,7 +334,7 @@ public class Menu {
                     } else {
                         return getPageOption(options, lockeds, -1, exit);
                     }
-                case Key.UP:
+                case UP:
                     rollback(options.length + 4);
                     if(selected >= 0) {
                         int previous = (((selected - 1) % options.length) + options.length) % options.length;

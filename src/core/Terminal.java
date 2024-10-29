@@ -18,11 +18,22 @@ public class Terminal<T> {
         return new Terminal<K>(translator);
     };
 
-    public Terminal(KeyTranslator<T> translator) {
+    public void start() {
         try {
-            this.translator = translator;
             this.console = new ConsoleReader();
         } catch (Exception e) {};
+    };
+
+    public void end() {
+        try {
+            if(this.console != null) {
+                this.console.getTerminal().restore();
+            };
+        } catch (Exception e) {}
+    };
+
+    public Terminal(KeyTranslator<T> translator) {
+        this.translator = translator;
     }
 
     public void clear() {

@@ -1,4 +1,3 @@
-
 import src.core.Router;
 import src.pages.MainPage;
 
