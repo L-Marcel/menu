@@ -1,4 +1,4 @@
-package src.layout;
+package src.core.layout;
 
 import com.diogonunes.jcolor.AnsiFormat;
 import static com.diogonunes.jcolor.Attribute.*;

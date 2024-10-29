@@ -1,9 +1,9 @@
-package src.router;
+package src.core;
 
 import java.util.LinkedList;
 
-import src.interfaces.Page;
-import src.layout.Menu;
+import src.core.interfaces.Page;
+import src.core.layout.Menu;
 
 public class Router {
     private LinkedList<Page> history = new LinkedList<>();

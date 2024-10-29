@@ -1,9 +1,9 @@
-package src.router.pages;
+package src.pages;
 
+import src.core.Router;
+import src.core.interfaces.Page;
+import src.core.layout.Menu;
 import src.errors.InvalidInput;
-import src.interfaces.Page;
-import src.layout.Menu;
-import src.router.Router;
 
 public class CreateUserPage implements Page {
     @Override
@@ -23,14 +23,7 @@ public class CreateUserPage implements Page {
         });
         Menu.getFloat("Peso: ", null);
         Menu.divider();
-        int confirmation = Menu.getPageConfirmation();
-        switch(confirmation) {
-            case -1:
-                router.back();
-                break;
-            default:
-                router.back();
-                break;
-        }
+        Menu.getPageConfirmation();
+        router.back();
     }
 }

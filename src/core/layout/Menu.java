@@ -1,16 +1,17 @@
-package src.layout;
+package src.core.layout;
 
 import java.util.LinkedList;
 
+import src.core.Terminal;
+import src.core.interfaces.Validator;
+import src.core.keys.Key;
+import src.core.utils.Array;
 import src.errors.EmptyArray;
 import src.errors.InvalidInput;
-import src.interfaces.Validator;
-import src.utils.Array;
-import src.utils.Terminal;
 
 public class Menu {
     private static final int WIDTH = 40;
-    private static Terminal terminal = new Terminal();
+    private static Terminal<Key> terminal = Terminal.init();
     private static LinkedList<String> lines = new LinkedList<String>();
     private static int temporary = 0;
 
@@ -20,7 +21,7 @@ public class Menu {
         print(true);
     }
 
-    public static void push(String line, Boolean newLine) {
+    public static void push(String line, boolean newLine) {
         lines.addLast(line);
         print(newLine);
     }
@@ -62,7 +63,7 @@ public class Menu {
         terminal.clear();
     };
 
-    private static void print(Boolean newLine) {
+    private static void print(boolean newLine) {
         clear();
         for (int i = 0; i < lines.size(); i++) {
             if(i == lines.size() - 1 && !newLine) {
@@ -218,16 +219,16 @@ public class Menu {
             push("[" + Text.highlight("UP") + "/" + Text.highlight("DOWN") + "] Escolher");
             push("[" + Text.highlight("ENTER") + "] Confirmar");
 
-            int key = terminal.key();
+            Key key = terminal.key();
             rollback(options.length + 4);
             switch (key) {
-                case 13:
+                case Key.ENTER:
                     push(Text.success("+ ") + prompt + Text.highlight(options[selected]));
                     return selected;
-                case 14:
+                case Key.DOWN:
                     if(selected == options.length - 1) return getOption(prompt, options, 0);
                     return getOption(prompt, options, selected + 1);
-                case 16:
+                case Key.UP:
                     if(selected == 0) return getOption(prompt, options, options.length - 1);
                     return getOption(prompt, options, selected - 1);
                 default:
@@ -243,27 +244,27 @@ public class Menu {
     //#region Page
     public static void pushPageBack() {
         push("[" + Text.highlight("BACKSPACE") + "] Voltar");
-        if(terminal.key() != 8) {
+        if(terminal.key() != Key.BACKSPACE) {
             rollback(1);
             pushPageBack();
         }
     };
 
-    public static int getPageConfirmation() {
+    public static boolean getPageConfirmation() {
         return getPageConfirmation(false);
     };
 
-    public static int getPageConfirmation(boolean exit) {
+    public static boolean getPageConfirmation(boolean exit) {
         push("[" + Text.highlight("ENTER") + "] Confirmar");
         if(exit) push("[" + Text.highlight("BACKSPACE") + "] Sair");
         else push("[" + Text.highlight("BACKSPACE") + "] Voltar");
 
-        int key = terminal.key();
+        Key key = terminal.key();
         switch (key) {
-            case 13:
-                return 0;
-            case 8:
-                return -1;
+            case Key.ENTER:
+                return true;
+            case Key.BACKSPACE:
+                return false;
             default:
                 rollback(2);
                 return getPageConfirmation(exit);
@@ -287,7 +288,11 @@ public class Menu {
     };
 
     public static int getPageOption(String[] options, Integer[] lockeds, int selected, boolean exit) {
-        if(options == null || options.length == 0) return getPageConfirmation(exit);
+        if(options == null || options.length == 0) {
+            boolean confirmation = getPageConfirmation(exit);
+            if(confirmation) return 0;
+            else return -1;
+        }
         else if(lockeds != null && lockeds.length >= options.length) selected = -1;
 
         try {
@@ -306,13 +311,13 @@ public class Menu {
             if(exit) push("[" + Text.highlight("BACKSPACE") + "] Sair");
             else push("[" + Text.highlight("BACKSPACE") + "] Voltar");
 
-            int key = terminal.key();
+            Key key = terminal.key();
             switch (key) {
-                case 13:
+                case Key.ENTER:
                     return selected;
-                case 8:
+                case Key.BACKSPACE:
                     return -1;
-                case 14:
+                case Key.DOWN:
                     rollback(options.length + 4);
                     if(selected >= 0) {
                         int next = (selected + 1) % options.length;
@@ -321,7 +326,7 @@ public class Menu {
                     } else {
                         return getPageOption(options, lockeds, -1, exit);
                     }
-                case 16:
+                case Key.UP:
                     rollback(options.length + 4);
                     if(selected >= 0) {
                         int previous = (((selected - 1) % options.length) + options.length) % options.length;

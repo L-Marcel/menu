@@ -1,0 +1,61 @@
+package src.core;
+
+import scala.tools.jline.console.ConsoleReader;
+import src.core.interfaces.KeyTranslator;
+import src.core.keys.DefaultKeyTranslator;
+import src.core.keys.Key;
+import src.core.layout.Menu;
+
+public class Terminal<T> {
+    private ConsoleReader console;
+    private KeyTranslator<T> translator;
+
+    public static Terminal<Key> init() {
+        return new Terminal<Key>(new DefaultKeyTranslator());
+    };
+
+    public static <K> Terminal<K> init(KeyTranslator<K> translator) {
+        return new Terminal<K>(translator);
+    };
+
+    public Terminal(KeyTranslator<T> translator) {
+        try {
+            this.translator = translator;
+            this.console = new ConsoleReader();
+        } catch (Exception e) {};
+    }
+
+    public void clear() {
+        try {
+            console.clearScreen();
+        } catch (Exception e) {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        }
+    };
+
+    public String nextLine(String terminal) {
+        try {
+            Menu.phantomPush(terminal);
+            console.setPrompt(terminal);
+            String line = console.readLine().trim();
+            console.setPrompt("");
+   
+            return line;
+        } catch (Exception e) {
+            return "";
+        }
+    };
+
+    public T key() {
+        try {
+            return translator.translate(console.readVirtualKey());
+        } catch (Exception e) {
+            return translator.untranslatable();
+        }
+    };
+
+    public void setTranslator(KeyTranslator<T> translator) {
+        this.translator = translator;
+    };
+}

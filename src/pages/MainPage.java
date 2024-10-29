@@ -1,9 +1,8 @@
-package src.router.pages;
+package src.pages;
 
-// import src.errors.InvalidInput;
-import src.interfaces.Page;
-import src.layout.Menu;
-import src.router.Router;
+import src.core.Router;
+import src.core.interfaces.Page;
+import src.core.layout.Menu;
 
 public class MainPage implements Page {
     @Override

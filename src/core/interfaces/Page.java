@@ -1,6 +1,6 @@
-package src.interfaces;
+package src.core.interfaces;
 
-import src.router.Router;
+import src.core.Router;
 
 public interface Page {
     void render(Router router);

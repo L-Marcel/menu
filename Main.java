@@ -1,15 +1,11 @@
-import src.router.Router;
-import src.router.pages.MainPage;
-import src.utils.Terminal;
+
+import src.core.Router;
+import src.pages.MainPage;
 
 public class Main {
     public static void main(String[] args) {
-        Terminal terminal = new Terminal();
-        while(true) {
-            System.out.println(terminal.key());
-        }
-        // Router router = new Router();
-        // router.start(new MainPage());
+        Router router = new Router();
+        router.start(new MainPage());
     }
 };
 

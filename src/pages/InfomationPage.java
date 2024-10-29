@@ -1,9 +1,9 @@
-package src.router.pages;
+package src.pages;
 
-import src.interfaces.Page;
-import src.layout.Text;
-import src.layout.Menu;
-import src.router.Router;
+import src.core.Router;
+import src.core.interfaces.Page;
+import src.core.layout.Menu;
+import src.core.layout.Text;
 
 public class InfomationPage implements Page {
     @Override
