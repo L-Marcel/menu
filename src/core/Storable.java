@@ -16,10 +16,10 @@ public abstract class Storable<T extends Serializable> implements Serializable {
         try {
             FileInputStream input = new FileInputStream("data/" + this.name + ".data");  
             ObjectInputStream object = new ObjectInputStream(input);
-            Packed packed = (Packed) object.readObject();
-            this.instances = new LinkedList<T>((LinkedList<T>) packed);
+            this.instances = (LinkedList<T>) object.readObject();
             object.close();         
         } catch (Exception e) {
+            System.out.println(e);
             this.instances = new LinkedList<T>();
         };
     };
