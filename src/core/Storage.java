@@ -77,7 +77,7 @@ public class Storage extends Thread {
                     };
                     
                     LinkedList<Serializable> storable = this.map.get(name);
-                    FileOutputStream out = new FileOutputStream("data/" + name + ".data");
+                    FileOutputStream out = new FileOutputStream("data/" + name + ".db");
                     ObjectOutputStream object = new ObjectOutputStream(out);
                     object.writeObject(storable);
                     object.flush();
