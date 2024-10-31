@@ -1,6 +1,6 @@
+package src;
+
 import pretty.Router;
-import src.Test;
-import src.Tests;
 import src.core.Storage;
 import src.pages.MainPage;
 
