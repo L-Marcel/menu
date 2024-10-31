@@ -3,6 +3,8 @@ package src.core;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Semaphore;
+
+import src.log.Log;
 import java.util.LinkedList;
 import java.io.Serializable;
 import java.io.FileOutputStream;
@@ -11,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Storage extends Thread {
+    private Log log = Log.getInstance();
     private Semaphore semaphore = new Semaphore(0);
     private static Storage instance;
     private boolean running = false;
@@ -24,6 +27,7 @@ public class Storage extends Thread {
             Files.createDirectories(Paths.get("data"));
         } catch (Exception e) {};
         this.start();
+        this.log.print("Starting storage thread...");
     };
     public static Storage getInstance() {
         if(Storage.instance == null) Storage.instance = new Storage();
