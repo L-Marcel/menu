@@ -29,6 +29,7 @@ public class Storage extends Thread {
         this.start();
         this.log.print("Starting storage thread...");
     };
+    
     public static Storage getInstance() {
         if(Storage.instance == null) Storage.instance = new Storage();
         return Storage.instance;
