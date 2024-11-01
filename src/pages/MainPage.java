@@ -3,10 +3,12 @@ package src.pages;
 import pretty.Router;
 import pretty.interfaces.Page;
 import pretty.layout.Menu;
+import src.log.Log;
 
 public class MainPage implements Page {
     @Override
     public void render(Menu menu, Router router) {
+        Log.print("Navigating to main page.");
         Integer[] lockeds = {1};
         String[] options = {"Cadastrar usuário", "Listar usuários", "Informações"};
         

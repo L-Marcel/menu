@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Storage extends Thread {
-    private Log log = Log.getInstance();
     private Semaphore semaphore = new Semaphore(0);
     private static Storage instance;
     private boolean running = false;
@@ -23,11 +22,11 @@ public class Storage extends Thread {
     //#region Singleton
     private Storage() {
         super();
+        setPriority(3);
         try {
             Files.createDirectories(Paths.get("data"));
         } catch (Exception e) {};
         this.start();
-        this.log.print("Starting storage thread...");
     };
     
     public static Storage getInstance() {
@@ -38,7 +37,14 @@ public class Storage extends Thread {
 
     //#region Tasks
     public void check() {
-        if(this.semaphore.availablePermits() == 0) this.semaphore.release();
+        this.check(true);
+    };
+
+    public void check(boolean task) {
+        if(this.semaphore.availablePermits() == 0) {
+            this.semaphore.release();
+            if(task) Log.print("Storage", "Tasks were released.");
+        };
     };
 
     public boolean hasTask() {
@@ -57,15 +63,21 @@ public class Storage extends Thread {
             this.tasks.merge(name, 1, Integer::sum);
             this.map.put(name, (LinkedList<Serializable>) data);
             this.check();
-        } catch (Exception e) {};
+        } catch (Exception e) {
+            Log.print("Storage", "Task request failed.");
+        };
     };
 
     @Override
     public void run() {
         this.running = true;
+        Log.print("Storage", "Started.");
         while(this.running || this.hasTask()) {
             try {
-                if(!this.hasTask()) semaphore.acquire();
+                if(!this.hasTask()) {
+                    semaphore.acquire();
+                };
+
                 for(String name : this.map.keySet()) {
                     if(this.hasTask(name)) Thread.sleep(1000);
                     else continue;
@@ -83,28 +95,38 @@ public class Storage extends Thread {
                     object.flush();
                     object.close();
                     this.tasks.put(name, 0);
+                    Log.print("Storage", "Task finished, " + name + " stored.");
                 };
-            } catch (Exception e) {};
+            } catch (Exception e) {
+                Log.print("Storage", "Tasks failed.");
+            };
         };
+        Log.print("Storage", "Finished.");
     };
     //#endregion
 
     //#region Control
     public static void finish() {
         try {
-            if(instance != null) {
-                instance.running = false;
-                instance.check();
-                instance.join();
+            if(Storage.instance != null) {
+                Log.print("Storage", "Finishing...");
+                Storage.instance.running = false;
+                Storage.instance.check(false);
+                Storage.instance.join();
             };
-        } catch (InterruptedException e) {};
+        } catch (InterruptedException e) {
+            Log.print("Storage", "Can't finish safely.");
+        };
     };
 
     @Override
     public void start() {
         try {
+            Log.print("Storage", "Starting...");
             super.start();
-        } catch (IllegalThreadStateException e) {};
+        } catch (IllegalThreadStateException e) {
+            Log.print("Storage", "Can't start.");
+        };
     };
     //#endregion
 }

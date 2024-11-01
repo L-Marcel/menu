@@ -15,7 +15,7 @@ public class Log extends Thread {
     private boolean running = true;
     private ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue<String>();;
     private FileWriter writer;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
 
     //#region Singleton
     private Log() {
@@ -32,8 +32,8 @@ public class Log extends Thread {
     };
 
     public static Log getInstance() {
-        if(instance == null) instance = new Log();
-        return instance;
+        if(Log.instance == null) Log.instance = new Log();
+        return Log.instance;
     };
     //#endregion
 
@@ -42,8 +42,17 @@ public class Log extends Thread {
     };
 
     //#region Core
-    public synchronized void print(String string) {
-        this.queue.add("[" + this.formatter.format(LocalDateTime.now()) + "] " + string);
+    public static synchronized void print(String message) {
+        Log.print("Main",  message);
+    };
+
+    public static synchronized void print(String sender, String message) {
+        Log log = Log.getInstance();
+        log.put(sender, message);
+    };
+
+    private void put(String sender, String message) {
+        this.queue.add("[" + this.formatter.format(LocalDateTime.now()) + "]:[" + sender + "] " + message);
         this.check();
     };
 
@@ -51,26 +60,36 @@ public class Log extends Thread {
     public void run() {
         while(running || !queue.isEmpty()) {
             try {
-                System.out.println("Log thread running...");
-                if(queue.isEmpty()) this.semaphore.acquire();
+                if(queue.isEmpty()) {
+                    this.semaphore.acquire();
+                };
                 while(!queue.isEmpty()) {
                     String log = queue.poll();
-                    System.out.println(log);
-                    writer.write(log);
+                    this.writer.write(log + "\n");
                 };
-                this.writer.close();
+                this.writer.flush();
             } catch (Exception e) {};
         };
     };
     //#endregion
 
+    //#region Control
     public static void finish() {
         try {
-            if(instance != null) {
-                instance.running = false;
-                instance.check();
-                instance.join();
+            if(Log.instance != null) {
+                Log.instance.running = false;
+                Log.instance.check();
+                Log.instance.join();
             };
         } catch (InterruptedException e) {};
     };
+
+    @Override
+    public void start() {
+        try {
+            super.start();
+        } catch (IllegalThreadStateException e) {
+        };
+    };
+    //#endregion
 };

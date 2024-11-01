@@ -4,10 +4,12 @@ import pretty.Router;
 import pretty.errors.InvalidInput;
 import pretty.interfaces.Page;
 import pretty.layout.Menu;
+import src.log.Log;
 
 public class CreateUserPage implements Page {
     @Override
     public void render(Menu menu, Router router) {
+        Log.print("Navigating to create user page.");
         String[] access = {"Usuário", "Administrador"};
         String[] genrers = {"Masculino", "Feminino", "Outro"};
 

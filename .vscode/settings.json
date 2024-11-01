@@ -1,0 +1,12 @@
+{
+    "logFileHighlighter.customPatterns": [
+        {
+            "pattern": "Main",
+            "foreground": "#98C379",
+        },
+        {
+            "pattern": "Storage",
+            "foreground": "#E5C07B",
+        }
+    ]
+}

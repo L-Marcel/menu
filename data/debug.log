@@ -1,1 +1,9 @@
-[31/10/2024 16:51] Starting storage thread...
+[01/11/2024 - 12:02:07]:[Storage] Starting...
+[01/11/2024 - 12:02:07]:[Storage] Started.
+[01/11/2024 - 12:02:08]:[Storage] Tasks were released.
+[01/11/2024 - 12:02:08]:[Main] Navigating to main page.
+[01/11/2024 - 12:02:09]:[Storage] Task finished, tests stored.
+[01/11/2024 - 12:02:09]:[Main] Navigating to create user page.
+[01/11/2024 - 12:02:17]:[Main] Navigating to main page.
+[01/11/2024 - 12:02:17]:[Storage] Finishing...
+[01/11/2024 - 12:02:17]:[Storage] Finished.
