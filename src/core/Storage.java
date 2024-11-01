@@ -89,11 +89,11 @@ public class Storage extends Thread {
                     };
                     
                     LinkedList<Serializable> storable = this.map.get(name);
-                    FileOutputStream out = new FileOutputStream("data/" + name + ".db");
+                    FileOutputStream out = new FileOutputStream("data/" + name + ".dat");
                     ObjectOutputStream object = new ObjectOutputStream(out);
                     object.writeObject(storable);
-                    object.flush();
                     object.close();
+                    this.map.remove(name);
                     this.tasks.put(name, 0);
                     Log.print("Storage", "Task finished, " + name + " stored.");
                 };

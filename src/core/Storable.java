@@ -14,7 +14,7 @@ public abstract class Storable<T extends Serializable> implements Serializable {
     public Storable(String name) {
         this.name = name;
         try {
-            FileInputStream input = new FileInputStream("data/" + this.name + ".db");  
+            FileInputStream input = new FileInputStream("data/" + this.name + ".dat");  
             ObjectInputStream object = new ObjectInputStream(input);
             this.instances = (LinkedList<T>) object.readObject();
             object.close();         
