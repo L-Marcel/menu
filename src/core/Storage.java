@@ -16,8 +16,9 @@ public class Storage extends Thread {
     private Semaphore semaphore = new Semaphore(0);
     private static Storage instance;
     private boolean running = false;
+    private ConcurrentHashMap<String, ObjectOutputStream> streams = new ConcurrentHashMap<String, ObjectOutputStream>();
     private ConcurrentHashMap<String, Integer> tasks = new ConcurrentHashMap<String, Integer>();
-    private ConcurrentSkipListMap<String, LinkedList<Serializable>> map = new ConcurrentSkipListMap<String, LinkedList<Serializable>>(); 
+    private ConcurrentHashMap<String, LinkedList<Serializable>> map = new ConcurrentHashMap<String, LinkedList<Serializable>>(); 
 
     //#region Singleton
     private Storage() {
@@ -43,7 +44,7 @@ public class Storage extends Thread {
     public void check(boolean task) {
         if(this.semaphore.availablePermits() == 0) {
             this.semaphore.release();
-            if(task) Log.print("Storage", "Tasks were released.");
+            if(task) Log.print("Storage", "Tasks were requested.");
         };
     };
 
@@ -60,9 +61,10 @@ public class Storage extends Thread {
     @SuppressWarnings("unchecked")
     protected synchronized <T extends Serializable> void store(String name, LinkedList<T> data) {
         try {
+            boolean isFirstTask = !hasTask();
             this.tasks.merge(name, 1, Integer::sum);
             this.map.put(name, (LinkedList<Serializable>) data);
-            this.check();
+            if(isFirstTask) this.check();
         } catch (Exception e) {
             Log.print("Storage", "Task request failed.");
         };
@@ -89,18 +91,33 @@ public class Storage extends Thread {
                     };
                     
                     LinkedList<Serializable> storable = this.map.get(name);
-                    FileOutputStream out = new FileOutputStream("data/" + name + ".dat");
-                    ObjectOutputStream object = new ObjectOutputStream(out);
+                    ObjectOutputStream object = this.streams.get(name);
+
+                    if(object == null) {
+                        FileOutputStream out = new FileOutputStream("data/" + name + ".dat");
+                        object = new ObjectOutputStream(out);
+                    };
+                    
                     object.writeObject(storable);
-                    object.close();
+                    object.flush();
                     this.map.remove(name);
                     this.tasks.put(name, 0);
-                    Log.print("Storage", "Task finished, " + name + " stored.");
+                    Log.print("Storage", "Task finished, " + storable.size() + " " + name + " were stored.");
                 };
             } catch (Exception e) {
                 Log.print("Storage", "Tasks failed.");
             };
         };
+
+        for(String name : this.streams.keySet()) {
+            try {
+                ObjectOutputStream object = this.streams.get(name);
+                object.close();
+            } catch (Exception e) {
+                Log.print("Storage", "Can't close stream of " + name + ".");
+            };
+        };
+
         Log.print("Storage", "Finished.");
     };
     //#endregion

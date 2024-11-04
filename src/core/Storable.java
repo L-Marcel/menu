@@ -2,6 +2,9 @@ package src.core;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+
+import src.log.Log;
+
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
@@ -17,6 +20,7 @@ public abstract class Storable<T extends Serializable> implements Serializable {
             FileInputStream input = new FileInputStream("data/" + this.name + ".dat");  
             ObjectInputStream object = new ObjectInputStream(input);
             this.instances = (LinkedList<T>) object.readObject();
+            Log.print("Storable", "Loadded " + this.instances.size() + " " + this.name + ".");
             object.close();         
         } catch (Exception e) {
             System.out.println(e);
