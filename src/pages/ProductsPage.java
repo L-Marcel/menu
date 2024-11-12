@@ -1,18 +1,9 @@
 package src.pages;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.stream.Collector;
-
 import pretty.Router;
-import pretty.errors.InvalidInput;
 import pretty.interfaces.Page;
 import pretty.layout.Menu;
 import src.log.Log;
-import src.products.ElectronicProduct;
-import src.products.Product;
-import src.products.ProductType;
 import src.products.Products;
 
 public class ProductsPage implements Page {
