@@ -1,6 +1,6 @@
-# Menu?
+# Atividade: SGBD para produtos
 
-Bom, primeiramente, esse repositório ainda vai sofrer muitas mudanças drásticas, incluindo no nome. Acontece que eu fiquei com um certo tempo livre e resolvi adiantar o que acredito que vai ser necessário para um projeto que sequer ainda me foi passado. Aproveitei para brincar um pouco com Thread.
+Eu fiquei com um certo tempo livre e resolvi adiantar o que acredito que vai ser necessário para um projeto que sequer ainda me foi passado. Aproveitei para brincar um pouco com Thread.
 
 # Justificativas
 Aqui deixarei as minhas justificativas de algumas decisões que tomei no desenvolvimento:
