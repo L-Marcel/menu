@@ -44,6 +44,6 @@ public class MainPage implements Page {
             default:
                 router.replace(this);
                 break;
-        }
-    }
+        };
+    };
 }

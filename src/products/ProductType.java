@@ -8,10 +8,10 @@ public enum ProductType {
     HEALTH(4);
 
     private int code;
-
+    
     private ProductType(int code) {
         this.code = code;
-    }
+    };
 
     public static ProductType fromCode(int code) {
         for (ProductType type : ProductType.values()) {

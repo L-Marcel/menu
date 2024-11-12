@@ -11,5 +11,5 @@ public class ShutdownHook extends Thread {
         Storage.finish();
         Log.finish();
         System.out.println("Dados sincronizados com sucesso!");
-    }
+    };
 }

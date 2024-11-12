@@ -66,5 +66,5 @@ public class CreateProductPage implements Page {
         };
 
         router.back();
-    }
+    };
 }

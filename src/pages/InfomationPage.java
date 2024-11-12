@@ -16,5 +16,5 @@ public class InfomationPage implements Page {
         menu.divider();
         menu.pushPageBack();
         router.back();
-    }
+    };
 }

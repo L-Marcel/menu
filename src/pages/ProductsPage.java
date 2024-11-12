@@ -19,10 +19,13 @@ public class ProductsPage implements Page {
             0, 5, 0, false
         );
 
-        if (selected != -1) {
-            router.navigate(new ProductPage(products.get().get(selected)));
-        } else {
-            router.back();
+        switch(selected) {
+            case -1:
+                router.back();
+                break;
+            default:
+                router.navigate(new ProductPage(products.get().get(selected)));
+                break;
         };
-    }
+    };
 }
