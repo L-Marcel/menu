@@ -22,7 +22,7 @@ public class CreateProductPage implements Page {
         String[] typeOptions = {"Alimentos", "Eletrônicos", "Roupas", "Beleza", "Saúde"};
 
         menu.header("Cadastrar produto");
-        int type = menu.getOption("Categoria: ", typeOptions);
+        
         String name = menu.getString("Nome: ", (t) -> {
             if (t.length() < 3) throw new InvalidInput("Forneça pelo menos três letras.");
             else if (t.length() > 20) throw new InvalidInput("Forneça no máximo vinte letras.");
@@ -30,6 +30,7 @@ public class CreateProductPage implements Page {
         float price = menu.getFloat("Preço (em R$): ", (t) -> {
             if (t < 0) throw new InvalidInput("O preço deve ser menor ou igual a zero.");
         });
+        int type = menu.getOption("Categoria: ", typeOptions);
 
         if(type == ProductType.ELECTRONIC.getCode()) {
             String brand = menu.getString("Marca: ", (t) -> {

@@ -36,6 +36,10 @@ public abstract class Storable<T extends Serializable> implements Serializable {
         storage.store(this.name, this.instances);
     };
 
+    public void update() {
+        store();
+    };
+
     public void add(T t) {
         instances.add(t);
         store();
@@ -45,4 +49,10 @@ public abstract class Storable<T extends Serializable> implements Serializable {
         instances.remove(t);
         store();
     };
+
+    public void replace(T old, T updated) {
+        int index = instances.indexOf(old);
+        instances.set(index, updated);
+        store();
+    }
 }

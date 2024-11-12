@@ -12,10 +12,10 @@ import src.products.Product;
 import src.products.Products;
 
 public class ProductPage implements Page {
-    private Product product;
+    private int index;
 
-    public ProductPage(Product product) {
-        this.product = product;
+    public ProductPage(int index) {
+        this.index = index;
     };
 
     @Override
@@ -23,11 +23,12 @@ public class ProductPage implements Page {
         Log.print("Navigating to product page.");
 
         Products products = Products.getInstance();
+        Product product = products.get().get(this.index);
 
-        menu.header(this.product.getName());
-        menu.push("Preço: " + this.product.getPrice());
+        menu.header(product.getName());
+        menu.push("Preço: " + product.getPrice());
         String[] typeOptions = {"Alimentos", "Eletrônicos", "Roupas", "Beleza", "Saúde"};
-        menu.push("Categoria: " + typeOptions[this.product.getType().getCode()]);
+        menu.push("Categoria: " + typeOptions[product.getType().getCode()]);
         if (product instanceof ElectronicProduct) {
             ElectronicProduct electronicProduct = (ElectronicProduct) product;
             menu.push("Marca: " + electronicProduct.getBrand());
@@ -52,6 +53,7 @@ public class ProductPage implements Page {
                 router.navigate(new EditProductPage(product));
                 break;
             case 1:
+                menu.rollback(7);
                 menu.header("Deseja mesmo removê-lo?");
                 boolean confirmation = menu.getPageConfirmation();
                 if (confirmation) {

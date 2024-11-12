@@ -1,6 +1,26 @@
-[04/11/2024 - 17:50:01]:[Storage] Starting...
-[04/11/2024 - 17:50:01]:[Storage] Started.
-[04/11/2024 - 17:50:01]:[Storable] Loadded 20 tests.
-[04/11/2024 - 17:50:01]:[Main] Navigating to main page.
-[04/11/2024 - 17:50:04]:[Storage] Finishing...
-[04/11/2024 - 17:50:04]:[Storage] Finished.
+[12/11/2024 - 20:51:51]:[Main] Navigating to main page.
+[12/11/2024 - 20:51:51]:[Storage] Starting...
+[12/11/2024 - 20:51:51]:[Storage] Started.
+[12/11/2024 - 20:51:51]:[Storable] Loadded 6 products.
+[12/11/2024 - 20:51:53]:[Main] Navigating to products page.
+[12/11/2024 - 20:51:55]:[Main] Navigating to product page.
+[12/11/2024 - 20:51:57]:[Main] Navigating to edit product page.
+[12/11/2024 - 20:52:19]:[Storage] Tasks were requested.
+[12/11/2024 - 20:52:19]:[Main] Navigating to product page.
+[12/11/2024 - 20:52:20]:[Storage] Task finished, 6 products were stored.
+[12/11/2024 - 20:52:25]:[Main] Navigating to edit product page.
+[12/11/2024 - 20:52:46]:[Storage] Tasks were requested.
+[12/11/2024 - 20:52:46]:[Main] Navigating to product page.
+[12/11/2024 - 20:52:47]:[Storage] Task finished, 6 products were stored.
+[12/11/2024 - 20:52:48]:[Main] Navigating to edit product page.
+[12/11/2024 - 20:53:04]:[Storage] Tasks were requested.
+[12/11/2024 - 20:53:04]:[Main] Navigating to product page.
+[12/11/2024 - 20:53:05]:[Storage] Task finished, 6 products were stored.
+[12/11/2024 - 20:53:05]:[Main] Navigating to edit product page.
+[12/11/2024 - 20:53:26]:[Storage] Tasks were requested.
+[12/11/2024 - 20:53:26]:[Main] Navigating to product page.
+[12/11/2024 - 20:53:27]:[Storage] Task finished, 6 products were stored.
+[12/11/2024 - 20:53:29]:[Main] Navigating to products page.
+[12/11/2024 - 20:53:34]:[Main] Navigating to main page.
+[12/11/2024 - 20:53:36]:[Storage] Finishing...
+[12/11/2024 - 20:53:36]:[Storage] Finished.

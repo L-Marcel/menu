@@ -15,7 +15,9 @@ public class MainPage implements Page {
         Integer[] lockeds = {1};
         String[] options = {
             "Cadastrar um produto",
-            "Listar produtos",
+            "Buscar produtos",
+            "Listar produtos por categoria",
+            "Listar todos os produtos",
             "Informações"
         };
         
@@ -36,9 +38,15 @@ public class MainPage implements Page {
                 router.navigate(new CreateProductPage());
                 break;
             case 1:
-                router.navigate(new ProductsPage());
+                router.navigate(new ProductsPage(true, false));
                 break;
             case 2:
+                router.navigate(new ProductsPage());
+                break;
+            case 3:
+                router.navigate(new ProductsPage(false, true));
+                break;
+            case 4:
                 router.navigate(new InfomationPage());
                 break;
             default:
