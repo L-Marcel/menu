@@ -4,16 +4,28 @@ import pretty.Router;
 import pretty.interfaces.Page;
 import pretty.layout.Menu;
 import src.log.Log;
+import src.products.Products;
 
 public class MainPage implements Page {
     @Override
     public void render(Menu menu, Router router) {
         Log.print("Navigating to main page.");
-        Integer[] lockeds = {1};
-        String[] options = {"Cadastrar usuário", "Listar usuários", "Informações"};
         
+        Products products = Products.getInstance();
+        Integer[] lockeds = {1};
+        String[] options = {
+            "Cadastrar um produto",
+            "Listar produtos",
+            "Informações"
+        };
+        
+        int option = -1;
         menu.header("Menu Principal");
-        int option = menu.getPageOption(options, lockeds, true);
+        if (products.get().size() == 0) {
+            option = menu.getPageOption(options, lockeds, true);
+        } else {
+            option = menu.getPageOption(options, true);
+        };
         menu.divider();
 
         switch(option) {
@@ -21,7 +33,10 @@ public class MainPage implements Page {
                 router.back();
                 break;
             case 0:
-                router.navigate(new CreateUserPage());
+                router.navigate(new CreateProductPage());
+                break;
+            case 1:
+                router.navigate(new ProductsPage());
                 break;
             case 2:
                 router.navigate(new InfomationPage());
