@@ -1,6 +1,6 @@
 # Atividade: SGBD para produtos
 
-Eu fiquei com um certo tempo livre e resolvi adiantar o que acredito que vai ser necessário para um projeto que sequer ainda me foi passado. Aproveitei para brincar um pouco com Thread.
+Um atividade da disciplina de LP 2 que tem como objetivo desenvolver um gerenciador de produtos com dados persistentes. 
 
 # Justificativas
 Aqui deixarei as minhas justificativas de algumas decisões que tomei no desenvolvimento:
